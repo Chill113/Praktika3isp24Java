@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>EquipmentRegistrationGUI.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #7a7e85;}
+.s4 { color: #6aab73;}
+.s5 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+EquipmentRegistrationGUI.java</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">javax</span><span class="s2">.</span><span class="s1">swing</span><span class="s2">.*;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">awt</span><span class="s2">.*;</span>
+
+<span class="s0">public class </span><span class="s1">EquipmentRegistrationGUI </span><span class="s2">{</span>
+
+    <span class="s0">public static void </span><span class="s1">main</span><span class="s2">(</span><span class="s1">String</span><span class="s2">[] </span><span class="s1">args</span><span class="s2">) {</span>
+        <span class="s3">// Создание окна регистрации оборудования</span>
+        <span class="s1">JFrame frame </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JFrame</span><span class="s2">(</span><span class="s4">&quot;Регистрация оборудования&quot;</span><span class="s2">);</span>
+        <span class="s1">frame</span><span class="s2">.</span><span class="s1">setSize</span><span class="s2">(</span><span class="s5">400</span><span class="s2">, </span><span class="s5">300</span><span class="s2">);</span>
+        <span class="s1">frame</span><span class="s2">.</span><span class="s1">setDefaultCloseOperation</span><span class="s2">(</span><span class="s1">JFrame</span><span class="s2">.</span><span class="s1">EXIT_ON_CLOSE</span><span class="s2">);</span>
+        <span class="s1">frame</span><span class="s2">.</span><span class="s1">setLocationRelativeTo</span><span class="s2">(</span><span class="s0">null</span><span class="s2">);</span>
+        <span class="s1">frame</span><span class="s2">.</span><span class="s1">setResizable</span><span class="s2">(</span><span class="s0">false</span><span class="s2">);</span>
+
+        <span class="s3">// Создание панели для ввода данных</span>
+        <span class="s1">JPanel panel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JPanel</span><span class="s2">();</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">setLayout</span><span class="s2">(</span><span class="s0">new </span><span class="s1">BoxLayout</span><span class="s2">(</span><span class="s1">panel</span><span class="s2">, </span><span class="s1">BoxLayout</span><span class="s2">.</span><span class="s1">Y_AXIS</span><span class="s2">));</span>
+
+        <span class="s3">// Создание полей ввода</span>
+        <span class="s1">JTextField nameField</span><span class="s2">;</span>
+        <span class="s1">nameField </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JTextField</span><span class="s2">();</span>
+        <span class="s1">nameField</span><span class="s2">.</span><span class="s1">setMaximumSize</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Dimension</span><span class="s2">(</span><span class="s1">Integer</span><span class="s2">.</span><span class="s1">MAX_VALUE</span><span class="s2">, </span><span class="s5">25</span><span class="s2">));</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s4">&quot;Название:&quot;</span><span class="s2">));</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">nameField</span><span class="s2">);</span>
+
+        <span class="s1">JTextField serialNumberField </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JTextField</span><span class="s2">();</span>
+        <span class="s1">serialNumberField</span><span class="s2">.</span><span class="s1">setMaximumSize</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Dimension</span><span class="s2">(</span><span class="s1">Integer</span><span class="s2">.</span><span class="s1">MAX_VALUE</span><span class="s2">, </span><span class="s5">25</span><span class="s2">));</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s4">&quot;Серийный номер:&quot;</span><span class="s2">));</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">serialNumberField</span><span class="s2">);</span>
+
+        <span class="s1">JComboBox</span><span class="s2">&lt;</span><span class="s1">String</span><span class="s2">&gt; </span><span class="s1">typeComboBox</span><span class="s2">;</span>
+        <span class="s1">typeComboBox </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JComboBox</span><span class="s2">&lt;&gt;(</span><span class="s0">new </span><span class="s1">String</span><span class="s2">[] {</span><span class="s4">&quot;ПК&quot;</span><span class="s2">, </span><span class="s4">&quot;Ноутбук&quot;</span><span class="s2">, </span><span class="s4">&quot;Сервер&quot;</span><span class="s2">});</span>
+        <span class="s1">typeComboBox</span><span class="s2">.</span><span class="s1">setMaximumSize</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Dimension</span><span class="s2">(</span><span class="s1">Integer</span><span class="s2">.</span><span class="s1">MAX_VALUE</span><span class="s2">, </span><span class="s5">25</span><span class="s2">));</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s4">&quot;Тип:&quot;</span><span class="s2">));</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">typeComboBox</span><span class="s2">);</span>
+
+        <span class="s3">// Создание кнопки регистрации</span>
+        <span class="s1">JButton registerButton </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JButton</span><span class="s2">(</span><span class="s4">&quot;Зарегистрировать&quot;</span><span class="s2">);</span>
+        <span class="s1">registerButton</span><span class="s2">.</span><span class="s1">addActionListener</span><span class="s2">(</span><span class="s1">_ -&gt; </span><span class="s2">{</span>
+            <span class="s3">// Получение введенных данных</span>
+            <span class="s1">nameField</span><span class="s2">.</span><span class="s1">getText</span><span class="s2">();</span>
+            <span class="s1">serialNumberField</span><span class="s2">.</span><span class="s1">getText</span><span class="s2">();</span>
+            <span class="s1">typeComboBox</span><span class="s2">.</span><span class="s1">getSelectedItem</span><span class="s2">();</span>
+
+            <span class="s3">// Отправка данных на сервер для регистрации оборудования</span>
+            <span class="s3">// ...</span>
+
+            <span class="s3">// Вывод сообщения об успешной регистрации</span>
+            <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showMessageDialog</span><span class="s2">(</span><span class="s1">frame</span><span class="s2">, </span><span class="s4">&quot;Оборудование успешно зарегистрировано!&quot;</span><span class="s2">);</span>
+
+            <span class="s3">// Очистка полей ввода</span>
+            <span class="s1">nameField</span><span class="s2">.</span><span class="s1">setText</span><span class="s2">(</span><span class="s4">&quot;&quot;</span><span class="s2">);</span>
+            <span class="s1">serialNumberField</span><span class="s2">.</span><span class="s1">setText</span><span class="s2">(</span><span class="s4">&quot;&quot;</span><span class="s2">);</span>
+            <span class="s1">typeComboBox</span><span class="s2">.</span><span class="s1">setSelectedIndex</span><span class="s2">(</span><span class="s5">0</span><span class="s2">);</span>
+        <span class="s2">});</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">registerButton</span><span class="s2">);</span>
+
+        <span class="s3">// Добавление панели в окно и отображение окна</span>
+        <span class="s1">frame</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">panel</span><span class="s2">);</span>
+        <span class="s1">frame</span><span class="s2">.</span><span class="s1">setVisible</span><span class="s2">(</span><span class="s0">true</span><span class="s2">);</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+
+
+</pre>
+</body>
+</html>

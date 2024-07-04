@@ -1,0 +1,319 @@
+<html>
+<head>
+<title>EquipmentManagementSystem.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #2aacb8;}
+.s5 { color: #7a7e85;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+EquipmentManagementSystem.java</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">qwe</span><span class="s2">.</span><span class="s1">bel</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">javax</span><span class="s2">.</span><span class="s1">swing</span><span class="s2">.*;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">awt</span><span class="s2">.*;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">awt</span><span class="s2">.</span><span class="s1">event</span><span class="s2">.</span><span class="s1">ActionEvent</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">awt</span><span class="s2">.</span><span class="s1">event</span><span class="s2">.</span><span class="s1">ActionListener</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">ArrayList</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">List</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">concurrent</span><span class="s2">.</span><span class="s1">atomic</span><span class="s2">.</span><span class="s1">AtomicReference</span><span class="s2">;</span>
+
+<span class="s0">public class </span><span class="s1">EquipmentManagementSystem </span><span class="s2">{</span>
+
+    <span class="s0">private </span><span class="s1">JFrame mainFrame</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">JPanel contentPane</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">EquipmentManager equipmentManager</span><span class="s2">;</span>
+
+    <span class="s0">public </span><span class="s1">EquipmentManagementSystem</span><span class="s2">() {</span>
+        <span class="s1">equipmentManager </span><span class="s2">= </span><span class="s0">new </span><span class="s1">EquipmentManager</span><span class="s2">();</span>
+        <span class="s1">initializeGUI</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">initializeGUI</span><span class="s2">() {</span>
+        <span class="s1">mainFrame </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JFrame</span><span class="s2">(</span><span class="s3">&quot;Система управления оборудованием&quot;</span><span class="s2">);</span>
+        <span class="s1">mainFrame</span><span class="s2">.</span><span class="s1">setDefaultCloseOperation</span><span class="s2">(</span><span class="s1">JFrame</span><span class="s2">.</span><span class="s1">EXIT_ON_CLOSE</span><span class="s2">);</span>
+        <span class="s1">mainFrame</span><span class="s2">.</span><span class="s1">setSize</span><span class="s2">(</span><span class="s4">800</span><span class="s2">, </span><span class="s4">600</span><span class="s2">);</span>
+        <span class="s1">mainFrame</span><span class="s2">.</span><span class="s1">setLocationRelativeTo</span><span class="s2">(</span><span class="s0">null</span><span class="s2">);</span>
+
+        <span class="s1">contentPane </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JPanel</span><span class="s2">(</span><span class="s0">new </span><span class="s1">CardLayout</span><span class="s2">());</span>
+        <span class="s1">mainFrame</span><span class="s2">.</span><span class="s1">setContentPane</span><span class="s2">(</span><span class="s1">contentPane</span><span class="s2">);</span>
+
+        <span class="s5">// Экран добавления нового оборудования</span>
+        <span class="s1">JPanel addEquipmentPanel </span><span class="s2">= </span><span class="s1">createAddEquipmentPanel</span><span class="s2">();</span>
+        <span class="s1">contentPane</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">addEquipmentPanel</span><span class="s2">, </span><span class="s3">&quot;addEquipment&quot;</span><span class="s2">);</span>
+
+        <span class="s5">// Экран обновления состояния/удаления оборудования</span>
+        <span class="s1">JPanel updateDeleteEquipmentPanel </span><span class="s2">= </span><span class="s1">createUpdateDeleteEquipmentPanel</span><span class="s2">();</span>
+        <span class="s1">contentPane</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">updateDeleteEquipmentPanel</span><span class="s2">, </span><span class="s3">&quot;updateDelete&quot;</span><span class="s2">);</span>
+
+        <span class="s5">// Экран поиска оборудования</span>
+        <span class="s1">JPanel searchEquipmentPanel </span><span class="s2">= </span><span class="s1">createSearchEquipmentPanel</span><span class="s2">();</span>
+        <span class="s1">contentPane</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">searchEquipmentPanel</span><span class="s2">, </span><span class="s3">&quot;search&quot;</span><span class="s2">);</span>
+
+        <span class="s5">// Экран просмотра отчетов</span>
+        <span class="s1">JPanel reportPanel </span><span class="s2">= </span><span class="s1">createReportPanel</span><span class="s2">();</span>
+        <span class="s1">contentPane</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">reportPanel</span><span class="s2">, </span><span class="s3">&quot;reports&quot;</span><span class="s2">);</span>
+
+        <span class="s5">// Начальный экран - добавление оборудования</span>
+        <span class="s1">CardLayout cardLayout </span><span class="s2">= (</span><span class="s1">CardLayout</span><span class="s2">) </span><span class="s1">contentPane</span><span class="s2">.</span><span class="s1">getLayout</span><span class="s2">();</span>
+        <span class="s1">cardLayout</span><span class="s2">.</span><span class="s1">show</span><span class="s2">(</span><span class="s1">contentPane</span><span class="s2">, </span><span class="s3">&quot;addEquipment&quot;</span><span class="s2">);</span>
+
+        <span class="s1">mainFrame</span><span class="s2">.</span><span class="s1">setVisible</span><span class="s2">(</span><span class="s0">true</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private </span><span class="s1">JPanel createAddEquipmentPanel</span><span class="s2">() {</span>
+        <span class="s1">JPanel panel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JPanel</span><span class="s2">(</span><span class="s0">new </span><span class="s1">GridLayout</span><span class="s2">(</span><span class="s4">4</span><span class="s2">, </span><span class="s4">2</span><span class="s2">, </span><span class="s4">10</span><span class="s2">, </span><span class="s4">10</span><span class="s2">));</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">setBorder</span><span class="s2">(</span><span class="s1">BorderFactory</span><span class="s2">.</span><span class="s1">createTitledBorder</span><span class="s2">(</span><span class="s3">&quot;Добавление нового оборудования&quot;</span><span class="s2">));</span>
+
+        <span class="s1">JLabel idLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s3">&quot;ID:&quot;</span><span class="s2">);</span>
+        <span class="s1">JTextField idField </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JTextField</span><span class="s2">();</span>
+        <span class="s1">JLabel nameLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s3">&quot;Название:&quot;</span><span class="s2">);</span>
+        <span class="s1">JTextField nameField </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JTextField</span><span class="s2">();</span>
+        <span class="s1">JLabel typeLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s3">&quot;Тип:&quot;</span><span class="s2">);</span>
+        <span class="s1">JComboBox</span><span class="s2">&lt;</span><span class="s1">String</span><span class="s2">&gt; </span><span class="s1">typeComboBox </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JComboBox</span><span class="s2">&lt;&gt;(</span><span class="s0">new </span><span class="s1">String</span><span class="s2">[]{</span><span class="s3">&quot;ПК&quot;</span><span class="s2">, </span><span class="s3">&quot;Ноутбук&quot;</span><span class="s2">, </span><span class="s3">&quot;Сервер&quot;</span><span class="s2">});</span>
+        <span class="s1">JButton addButton </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JButton</span><span class="s2">(</span><span class="s3">&quot;Добавить&quot;</span><span class="s2">);</span>
+
+        <span class="s1">addButton</span><span class="s2">.</span><span class="s1">addActionListener</span><span class="s2">(</span><span class="s0">new </span><span class="s1">ActionListener</span><span class="s2">() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">actionPerformed</span><span class="s2">(</span><span class="s1">ActionEvent e</span><span class="s2">) {</span>
+                <span class="s1">String id </span><span class="s2">= </span><span class="s1">idField</span><span class="s2">.</span><span class="s1">getText</span><span class="s2">();</span>
+                <span class="s1">String name </span><span class="s2">= </span><span class="s1">nameField</span><span class="s2">.</span><span class="s1">getText</span><span class="s2">();</span>
+                <span class="s1">String type </span><span class="s2">= (</span><span class="s1">String</span><span class="s2">) </span><span class="s1">typeComboBox</span><span class="s2">.</span><span class="s1">getSelectedItem</span><span class="s2">();</span>
+                <span class="s0">if </span><span class="s2">(!</span><span class="s1">id</span><span class="s2">.</span><span class="s1">isEmpty</span><span class="s2">() &amp;&amp; !</span><span class="s1">name</span><span class="s2">.</span><span class="s1">isEmpty</span><span class="s2">() &amp;&amp; !</span><span class="s1">type</span><span class="s2">.</span><span class="s1">isEmpty</span><span class="s2">()) {</span>
+                    <span class="s1">Equipment123 newEquipment1 </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Equipment123</span><span class="s2">(</span><span class="s1">id</span><span class="s2">, </span><span class="s1">name</span><span class="s2">, </span><span class="s1">type</span><span class="s2">);</span>
+                    <span class="s1">equipmentManager</span><span class="s2">.</span><span class="s1">addEquipment</span><span class="s2">(</span><span class="s1">newEquipment1</span><span class="s2">);</span>
+                    <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showMessageDialog</span><span class="s2">(</span><span class="s1">mainFrame</span><span class="s2">, </span><span class="s3">&quot;Оборудование успешно добавлено!&quot;</span><span class="s2">);</span>
+                    <span class="s1">idField</span><span class="s2">.</span><span class="s1">setText</span><span class="s2">(</span><span class="s3">&quot;&quot;</span><span class="s2">);</span>
+                    <span class="s1">nameField</span><span class="s2">.</span><span class="s1">setText</span><span class="s2">(</span><span class="s3">&quot;&quot;</span><span class="s2">);</span>
+                    <span class="s1">typeComboBox</span><span class="s2">.</span><span class="s1">setSelectedIndex</span><span class="s2">(</span><span class="s4">0</span><span class="s2">);</span>
+                <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                    <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showMessageDialog</span><span class="s2">(</span><span class="s1">mainFrame</span><span class="s2">, </span><span class="s3">&quot;Пожалуйста, заполните все поля.&quot;</span><span class="s2">);</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+        <span class="s2">});</span>
+
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">idLabel</span><span class="s2">);</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">idField</span><span class="s2">);</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">nameLabel</span><span class="s2">);</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">nameField</span><span class="s2">);</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">typeLabel</span><span class="s2">);</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">typeComboBox</span><span class="s2">);</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">()); </span><span class="s5">// Заполняем пустую ячейку</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">addButton</span><span class="s2">);</span>
+
+        <span class="s0">return </span><span class="s1">panel</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private </span><span class="s1">JPanel createUpdateDeleteEquipmentPanel</span><span class="s2">() {</span>
+        <span class="s1">JPanel panel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JPanel</span><span class="s2">(</span><span class="s0">new </span><span class="s1">GridLayout</span><span class="s2">(</span><span class="s4">3</span><span class="s2">, </span><span class="s4">2</span><span class="s2">, </span><span class="s4">10</span><span class="s2">, </span><span class="s4">10</span><span class="s2">));</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">setBorder</span><span class="s2">(</span><span class="s1">BorderFactory</span><span class="s2">.</span><span class="s1">createTitledBorder</span><span class="s2">(</span><span class="s3">&quot;Обновление/Удаление оборудования&quot;</span><span class="s2">));</span>
+
+        <span class="s1">JLabel idLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s3">&quot;ID:&quot;</span><span class="s2">);</span>
+        <span class="s1">JTextField idField </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JTextField</span><span class="s2">();</span>
+        <span class="s1">AtomicReference</span><span class="s2">&lt;</span><span class="s1">Object</span><span class="s2">&gt; </span><span class="s1">JLa </span><span class="s2">= </span><span class="s0">null</span><span class="s2">;</span>
+        <span class="s1">bel nameLabel</span><span class="s2">;</span>
+        <span class="s1">nameLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">bel</span><span class="s2">(</span><span class="s3">&quot;Новое название:&quot;</span><span class="s2">);</span>
+        <span class="s1">JTextField nameField </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JTextField</span><span class="s2">();</span>
+        <span class="s1">JLabel typeLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s3">&quot;Новый тип:&quot;</span><span class="s2">);</span>
+        <span class="s1">JComboBox</span><span class="s2">&lt;</span><span class="s1">String</span><span class="s2">&gt; </span><span class="s1">typeComboBox </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JComboBox</span><span class="s2">&lt;&gt;(</span><span class="s0">new </span><span class="s1">String</span><span class="s2">[]{</span><span class="s3">&quot;ПК&quot;</span><span class="s2">, </span><span class="s3">&quot;Ноутбук&quot;</span><span class="s2">, </span><span class="s3">&quot;Сервер&quot;</span><span class="s2">});</span>
+        <span class="s1">JButton updateButton </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JButton</span><span class="s2">(</span><span class="s3">&quot;Обновить&quot;</span><span class="s2">);</span>
+        <span class="s1">JButton deleteButton </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JButton</span><span class="s2">(</span><span class="s3">&quot;Удалить&quot;</span><span class="s2">);</span>
+
+        <span class="s1">updateButton</span><span class="s2">.</span><span class="s1">addActionListener</span><span class="s2">(</span><span class="s0">new </span><span class="s1">ActionListener</span><span class="s2">() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">actionPerformed</span><span class="s2">(</span><span class="s1">ActionEvent e</span><span class="s2">) {</span>
+                <span class="s1">String id </span><span class="s2">= </span><span class="s1">idField</span><span class="s2">.</span><span class="s1">getText</span><span class="s2">();</span>
+                <span class="s1">String name </span><span class="s2">= </span><span class="s1">nameField</span><span class="s2">.</span><span class="s1">getText</span><span class="s2">();</span>
+                <span class="s1">String type </span><span class="s2">= (</span><span class="s1">String</span><span class="s2">) </span><span class="s1">typeComboBox</span><span class="s2">.</span><span class="s1">getSelectedItem</span><span class="s2">();</span>
+                <span class="s0">if </span><span class="s2">(!</span><span class="s1">id</span><span class="s2">.</span><span class="s1">isEmpty</span><span class="s2">()) {</span>
+                    <span class="s1">equipmentManager</span><span class="s2">.</span><span class="s1">updateEquipment</span><span class="s2">(</span><span class="s1">id</span><span class="s2">, </span><span class="s1">name</span><span class="s2">, </span><span class="s1">type</span><span class="s2">);</span>
+                    <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showMessageDialog</span><span class="s2">(</span><span class="s1">mainFrame</span><span class="s2">, </span><span class="s3">&quot;Оборудование успешно обновлено!&quot;</span><span class="s2">);</span>
+                    <span class="s1">idField</span><span class="s2">.</span><span class="s1">setText</span><span class="s2">(</span><span class="s3">&quot;&quot;</span><span class="s2">);</span>
+                    <span class="s1">nameField</span><span class="s2">.</span><span class="s1">setText</span><span class="s2">(</span><span class="s3">&quot;&quot;</span><span class="s2">);</span>
+                    <span class="s1">typeComboBox</span><span class="s2">.</span><span class="s1">setSelectedIndex</span><span class="s2">(</span><span class="s4">0</span><span class="s2">);</span>
+                <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                    <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showMessageDialog</span><span class="s2">(</span><span class="s1">mainFrame</span><span class="s2">, </span><span class="s3">&quot;Пожалуйста, введите ID оборудования.&quot;</span><span class="s2">);</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+        <span class="s2">});</span>
+
+        <span class="s1">deleteButton</span><span class="s2">.</span><span class="s1">addActionListener</span><span class="s2">(</span><span class="s0">new </span><span class="s1">ActionListener</span><span class="s2">() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">actionPerformed</span><span class="s2">(</span><span class="s1">ActionEvent e</span><span class="s2">) {</span>
+                <span class="s1">String id </span><span class="s2">= </span><span class="s1">idField</span><span class="s2">.</span><span class="s1">getText</span><span class="s2">();</span>
+                <span class="s0">if </span><span class="s2">(!</span><span class="s1">id</span><span class="s2">.</span><span class="s1">isEmpty</span><span class="s2">()) {</span>
+                    <span class="s1">equipmentManager</span><span class="s2">.</span><span class="s1">deleteEquipment</span><span class="s2">(</span><span class="s1">id</span><span class="s2">);</span>
+                    <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showMessageDialog</span><span class="s2">(</span><span class="s1">mainFrame</span><span class="s2">, </span><span class="s3">&quot;Оборудование успешно удалено!&quot;</span><span class="s2">);</span>
+                    <span class="s1">idField</span><span class="s2">.</span><span class="s1">setText</span><span class="s2">(</span><span class="s3">&quot;&quot;</span><span class="s2">);</span>
+                <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                    <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showMessageDialog</span><span class="s2">(</span><span class="s1">mainFrame</span><span class="s2">, </span><span class="s3">&quot;Пожалуйста, введите ID оборудования.&quot;</span><span class="s2">);</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+        <span class="s2">});</span>
+
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">idLabel</span><span class="s2">);</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">idField</span><span class="s2">);</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">nameField</span><span class="s2">);</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">typeLabel</span><span class="s2">);</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">typeComboBox</span><span class="s2">);</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">updateButton</span><span class="s2">);</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">deleteButton</span><span class="s2">);</span>
+
+        <span class="s0">return </span><span class="s1">panel</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private </span><span class="s1">JPanel createSearchEquipmentPanel</span><span class="s2">() {</span>
+        <span class="s1">JPanel panel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JPanel</span><span class="s2">(</span><span class="s0">new </span><span class="s1">GridLayout</span><span class="s2">(</span><span class="s4">3</span><span class="s2">, </span><span class="s4">2</span><span class="s2">, </span><span class="s4">10</span><span class="s2">, </span><span class="s4">10</span><span class="s2">));</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">setBorder</span><span class="s2">(</span><span class="s1">BorderFactory</span><span class="s2">.</span><span class="s1">createTitledBorder</span><span class="s2">(</span><span class="s3">&quot;Поиск оборудования&quot;</span><span class="s2">));</span>
+
+        <span class="s1">JLabel searchLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s3">&quot;Поиск по:&quot;</span><span class="s2">);</span>
+        <span class="s1">JComboBox</span><span class="s2">&lt;</span><span class="s1">String</span><span class="s2">&gt; </span><span class="s1">searchTypeComboBox </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JComboBox</span><span class="s2">&lt;&gt;(</span><span class="s0">new </span><span class="s1">String</span><span class="s2">[]{</span><span class="s3">&quot;ID&quot;</span><span class="s2">, </span><span class="s3">&quot;Название&quot;</span><span class="s2">, </span><span class="s3">&quot;Тип&quot;</span><span class="s2">});</span>
+        <span class="s1">JTextField searchField </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JTextField</span><span class="s2">();</span>
+        <span class="s1">JButton searchButton </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JButton</span><span class="s2">(</span><span class="s3">&quot;Поиск&quot;</span><span class="s2">);</span>
+        <span class="s1">JTextArea resultsArea </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JTextArea</span><span class="s2">();</span>
+        <span class="s1">resultsArea</span><span class="s2">.</span><span class="s1">setEditable</span><span class="s2">(</span><span class="s0">false</span><span class="s2">);</span>
+        <span class="s1">JScrollPane resultsScrollPane </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JScrollPane</span><span class="s2">(</span><span class="s1">resultsArea</span><span class="s2">);</span>
+
+        <span class="s1">searchButton</span><span class="s2">.</span><span class="s1">addActionListener</span><span class="s2">(</span><span class="s0">new </span><span class="s1">ActionListener</span><span class="s2">() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">actionPerformed</span><span class="s2">(</span><span class="s1">ActionEvent e</span><span class="s2">) {</span>
+                <span class="s1">String searchType </span><span class="s2">= (</span><span class="s1">String</span><span class="s2">) </span><span class="s1">searchTypeComboBox</span><span class="s2">.</span><span class="s1">getSelectedItem</span><span class="s2">();</span>
+                <span class="s1">String searchValue </span><span class="s2">= </span><span class="s1">searchField</span><span class="s2">.</span><span class="s1">getText</span><span class="s2">();</span>
+                <span class="s1">List</span><span class="s2">&lt;</span><span class="s1">Equipment123</span><span class="s2">&gt; </span><span class="s1">results </span><span class="s2">= </span><span class="s1">equipmentManager</span><span class="s2">.</span><span class="s1">searchEquipment</span><span class="s2">(</span><span class="s1">searchType</span><span class="s2">, </span><span class="s1">searchValue</span><span class="s2">);</span>
+                <span class="s1">resultsArea</span><span class="s2">.</span><span class="s1">setText</span><span class="s2">(</span><span class="s3">&quot;&quot;</span><span class="s2">);</span>
+                <span class="s0">if </span><span class="s2">(!</span><span class="s1">results</span><span class="s2">.</span><span class="s1">isEmpty</span><span class="s2">()) {</span>
+                    <span class="s0">for </span><span class="s2">(</span><span class="s1">Equipment123 equipment1 </span><span class="s2">: </span><span class="s1">results</span><span class="s2">) {</span>
+                        <span class="s1">resultsArea</span><span class="s2">.</span><span class="s1">append</span><span class="s2">(</span><span class="s3">&quot;ID: &quot; </span><span class="s2">+ </span><span class="s1">equipment1</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">() + </span><span class="s3">&quot;, Название: &quot; </span><span class="s2">+ </span><span class="s1">equipment1</span><span class="s2">.</span><span class="s1">getName</span><span class="s2">() + </span><span class="s3">&quot;, Тип: &quot; </span><span class="s2">+ </span><span class="s1">equipment1</span><span class="s2">.</span><span class="s1">getType</span><span class="s2">() + </span><span class="s3">&quot;</span><span class="s0">\n</span><span class="s3">&quot;</span><span class="s2">);</span>
+                    <span class="s2">}</span>
+                <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                    <span class="s1">resultsArea</span><span class="s2">.</span><span class="s1">append</span><span class="s2">(</span><span class="s3">&quot;Оборудование не найдено.&quot;</span><span class="s2">);</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+        <span class="s2">});</span>
+
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">searchLabel</span><span class="s2">);</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">searchTypeComboBox</span><span class="s2">);</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s3">&quot;Значение:&quot;</span><span class="s2">));</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">searchField</span><span class="s2">);</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">searchButton</span><span class="s2">);</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">resultsScrollPane</span><span class="s2">);</span>
+
+        <span class="s0">return </span><span class="s1">panel</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private </span><span class="s1">JPanel createReportPanel</span><span class="s2">() {</span>
+        <span class="s1">JPanel panel</span>
+                <span class="s2">= </span><span class="s0">new </span><span class="s1">JPanel</span><span class="s2">(</span><span class="s0">new </span><span class="s1">BorderLayout</span><span class="s2">());</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">setBorder</span><span class="s2">(</span><span class="s1">BorderFactory</span><span class="s2">.</span><span class="s1">createTitledBorder</span><span class="s2">(</span><span class="s3">&quot;Просмотр отчетов&quot;</span><span class="s2">));</span>
+
+        <span class="s5">// В этом примере показываем пример - добавить реальную логику отчетов</span>
+        <span class="s1">JTextArea reportArea </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JTextArea</span><span class="s2">(</span><span class="s3">&quot;Пример отчета: </span><span class="s0">\n</span><span class="s3">&quot; </span><span class="s2">+</span>
+                <span class="s3">&quot;Список оборудования: </span><span class="s0">\n</span><span class="s3">&quot; </span><span class="s2">+</span>
+                <span class="s1">equipmentManager</span><span class="s2">.</span><span class="s1">getEquipmentListAsString</span><span class="s2">());</span>
+        <span class="s1">reportArea</span><span class="s2">.</span><span class="s1">setEditable</span><span class="s2">(</span><span class="s0">false</span><span class="s2">);</span>
+        <span class="s1">JScrollPane reportScrollPane </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JScrollPane</span><span class="s2">(</span><span class="s1">reportArea</span><span class="s2">);</span>
+
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">reportScrollPane</span><span class="s2">, </span><span class="s1">BorderLayout</span><span class="s2">.</span><span class="s1">CENTER</span><span class="s2">);</span>
+        <span class="s0">return </span><span class="s1">panel</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public static void </span><span class="s1">main</span><span class="s2">(</span><span class="s1">String</span><span class="s2">[] </span><span class="s1">args</span><span class="s2">) {</span>
+        <span class="s0">new </span><span class="s1">EquipmentManagementSystem</span><span class="s2">();</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+
+<span class="s0">class </span><span class="s1">Equipment123 </span><span class="s2">{</span>
+    <span class="s0">private </span><span class="s1">String id</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">String name</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">String type</span><span class="s2">;</span>
+
+    <span class="s0">public </span><span class="s1">Equipment123</span><span class="s2">(</span><span class="s1">String id</span><span class="s2">, </span><span class="s1">String name</span><span class="s2">, </span><span class="s1">String type</span><span class="s2">) {</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">id </span><span class="s2">= </span><span class="s1">id</span><span class="s2">;</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">name </span><span class="s2">= </span><span class="s1">name</span><span class="s2">;</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">type </span><span class="s2">= </span><span class="s1">type</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public </span><span class="s1">String getId</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">id</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public </span><span class="s1">String getName</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">name</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public </span><span class="s1">String getType</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">type</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">setType</span><span class="s2">(</span><span class="s1">String type</span><span class="s2">) {</span>
+
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">setName</span><span class="s2">() {</span>
+
+    <span class="s2">}</span>
+<span class="s2">}</span>
+
+<span class="s0">class </span><span class="s1">EquipmentManager </span><span class="s2">{</span>
+    <span class="s0">private </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">Equipment123</span><span class="s2">&gt; </span><span class="s1">equipment1List</span><span class="s2">;</span>
+
+    <span class="s0">public </span><span class="s1">EquipmentManager</span><span class="s2">() {</span>
+        <span class="s1">equipment1List </span><span class="s2">= </span><span class="s0">new </span><span class="s1">ArrayList</span><span class="s2">&lt;&gt;();</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">addEquipment</span><span class="s2">(</span><span class="s1">Equipment123 equipment1</span><span class="s2">) {</span>
+        <span class="s1">equipment1List</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">equipment1</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">updateEquipment</span><span class="s2">(</span><span class="s1">String id</span><span class="s2">, </span><span class="s1">String name</span><span class="s2">, </span><span class="s1">String type</span><span class="s2">) {</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s4">0</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">equipment1List</span><span class="s2">.</span><span class="s1">size</span><span class="s2">(); </span><span class="s1">i</span><span class="s2">++) {</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">equipment1List</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">i</span><span class="s2">).</span><span class="s1">getId</span><span class="s2">().</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">id</span><span class="s2">)) {</span>
+                <span class="s1">equipment1List</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">i</span><span class="s2">).</span><span class="s1">setName</span><span class="s2">();</span>
+                <span class="s1">equipment1List</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">i</span><span class="s2">).</span><span class="s1">setType</span><span class="s2">(</span><span class="s1">type</span><span class="s2">);</span>
+                <span class="s0">return</span><span class="s2">;</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">deleteEquipment</span><span class="s2">(</span><span class="s1">String id</span><span class="s2">) {</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s4">0</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">equipment1List</span><span class="s2">.</span><span class="s1">size</span><span class="s2">(); </span><span class="s1">i</span><span class="s2">++) {</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">equipment1List</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">i</span><span class="s2">).</span><span class="s1">getId</span><span class="s2">().</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">id</span><span class="s2">)) {</span>
+                <span class="s1">equipment1List</span><span class="s2">.</span><span class="s1">remove</span><span class="s2">(</span><span class="s1">i</span><span class="s2">);</span>
+                <span class="s0">return</span><span class="s2">;</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">Equipment123</span><span class="s2">&gt; </span><span class="s1">searchEquipment</span><span class="s2">(</span><span class="s1">String searchType</span><span class="s2">, </span><span class="s1">String searchValue</span><span class="s2">) {</span>
+        <span class="s1">List</span><span class="s2">&lt;</span><span class="s1">Equipment123</span><span class="s2">&gt; </span><span class="s1">results </span><span class="s2">= </span><span class="s0">new </span><span class="s1">ArrayList</span><span class="s2">&lt;&gt;();</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">Equipment123 equipment1 </span><span class="s2">: </span><span class="s1">equipment1List</span><span class="s2">) {</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">searchType</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s3">&quot;ID&quot;</span><span class="s2">) &amp;&amp; </span><span class="s1">equipment1</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">().</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">searchValue</span><span class="s2">)) {</span>
+                <span class="s1">results</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">equipment1</span><span class="s2">);</span>
+            <span class="s2">} </span><span class="s0">else if </span><span class="s2">(</span><span class="s1">searchType</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s3">&quot;Название&quot;</span><span class="s2">) &amp;&amp; </span><span class="s1">equipment1</span><span class="s2">.</span><span class="s1">getName</span><span class="s2">().</span><span class="s1">contains</span><span class="s2">(</span><span class="s1">searchValue</span><span class="s2">)) {</span>
+                <span class="s1">results</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">equipment1</span><span class="s2">);</span>
+            <span class="s2">} </span><span class="s0">else if </span><span class="s2">(</span><span class="s1">searchType</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s3">&quot;Тип&quot;</span><span class="s2">) &amp;&amp; </span><span class="s1">equipment1</span><span class="s2">.</span><span class="s1">getType</span><span class="s2">().</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">searchValue</span><span class="s2">)) {</span>
+                <span class="s1">results</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">equipment1</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+        <span class="s0">return </span><span class="s1">results</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public </span><span class="s1">String getEquipmentListAsString</span><span class="s2">() {</span>
+        <span class="s1">StringBuilder sb </span><span class="s2">= </span><span class="s0">new </span><span class="s1">StringBuilder</span><span class="s2">();</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">Equipment123 equipment1 </span><span class="s2">: </span><span class="s1">equipment1List</span><span class="s2">) {</span>
+            <span class="s1">sb</span><span class="s2">.</span><span class="s1">append</span><span class="s2">(</span><span class="s3">&quot;ID: &quot;</span><span class="s2">).</span><span class="s1">append</span><span class="s2">(</span><span class="s1">equipment1</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">()).</span><span class="s1">append</span><span class="s2">(</span><span class="s3">&quot;, Название: &quot;</span><span class="s2">).</span><span class="s1">append</span><span class="s2">(</span><span class="s1">equipment1</span><span class="s2">.</span><span class="s1">getName</span><span class="s2">()).</span><span class="s1">append</span><span class="s2">(</span><span class="s3">&quot;, Тип: &quot;</span><span class="s2">).</span><span class="s1">append</span><span class="s2">(</span><span class="s1">equipment1</span><span class="s2">.</span><span class="s1">getType</span><span class="s2">()).</span><span class="s1">append</span><span class="s2">(</span><span class="s3">&quot;</span><span class="s0">\n</span><span class="s3">&quot;</span><span class="s2">);</span>
+        <span class="s2">}</span>
+        <span class="s0">return </span><span class="s1">sb</span><span class="s2">.</span><span class="s1">toString</span><span class="s2">();</span>
+    <span class="s2">}</span>
+<span class="s2">}</span></pre>
+</body>
+</html>

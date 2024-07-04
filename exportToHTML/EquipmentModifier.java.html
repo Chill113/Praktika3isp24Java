@@ -1,0 +1,41 @@
+<html>
+<head>
+<title>EquipmentModifier.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #7a7e85;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+EquipmentModifier.java</font>
+</center></td></tr></table>
+<pre><span class="s0">public class </span><span class="s1">EquipmentModifier </span><span class="s2">{</span>
+
+    <span class="s0">public void </span><span class="s1">updateEquipmentName</span><span class="s2">(</span><span class="s1">String id</span><span class="s2">, </span><span class="s1">String newName</span><span class="s2">) {</span>
+        <span class="s1">Equipment123 equipment1 </span><span class="s2">= </span><span class="s1">getEquipment</span><span class="s2">(</span><span class="s1">id</span><span class="s2">);</span>
+        <span class="s0">assert </span><span class="s1">equipment1 </span><span class="s2">!= </span><span class="s0">null</span><span class="s2">;</span>
+        <span class="s1">equipment1</span><span class="s2">.</span><span class="s1">setName</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">updateEquipmentType</span><span class="s2">(</span><span class="s1">String id</span><span class="s2">, </span><span class="s1">String newType</span><span class="s2">) {</span>
+        <span class="s1">Equipment123 equipment1 </span><span class="s2">= </span><span class="s1">getEquipment</span><span class="s2">(</span><span class="s1">id</span><span class="s2">);</span>
+        <span class="s0">assert </span><span class="s1">equipment1 </span><span class="s2">!= </span><span class="s0">null</span><span class="s2">;</span>
+        <span class="s1">equipment1</span><span class="s2">.</span><span class="s1">setType</span><span class="s2">(</span><span class="s1">newType</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s3">// ...</span>
+
+    <span class="s0">private </span><span class="s1">Equipment123 getEquipment</span><span class="s2">(</span><span class="s1">String id</span><span class="s2">) {</span>
+        <span class="s3">// Получение оборудования из базы данных или другого источника</span>
+        <span class="s0">return null</span><span class="s2">;</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>
